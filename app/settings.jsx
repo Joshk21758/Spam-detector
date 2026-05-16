@@ -1,4 +1,11 @@
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native";
+import {
+  StyleSheet,
+  View,
+  Text,
+  TouchableOpacity,
+  Switch,
+  TextInput,
+} from "react-native";
 
 export default function Settings() {
   return (
@@ -6,7 +13,7 @@ export default function Settings() {
       <Text style={styles.title}>Settings</Text>
       <View style={styles.row}>
         <Text style={styles.label}>Push notifications</Text>
-        <Switch></Switch>
+        <Switch />
         <Text style={styles.label}>Language</Text>
         <TextInput
           placeholder="English"

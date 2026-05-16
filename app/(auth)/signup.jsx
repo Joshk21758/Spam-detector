@@ -6,13 +6,55 @@ import {
   TextInput,
   TouchableOpacity,
 } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
+import apiClient from "../../config/api";
+import { useRouter } from "expo-router";
+import { ActivityIndicator } from "react-native";
 
 export default function Register() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // Handle register action
+  const handleRegister = async () => {
+    // client-side validation
+    if (!email || !password) {
+      alert("Please fill in all fields!");
+    }
+
+    // Send request to Express API
+    setLoading(true);
+    try {
+      const response = await apiClient.post("/users/register", {
+        email,
+        password,
+        confirmPassword,
+      });
+
+      // Check if response is success
+      if (response.status === 201) {
+        router.replace("/dashboard");
+        alert("Successfully registered!");
+      } else {
+        alert("Failed to send API request");
+      }
+    } catch (err) {
+      alert("Failed to Register user");
+    } finally {
+      setLoading(false);
+    }
+  };
   return (
     <View style={styles.container}>
+      <MaterialIcons
+        name="account-circle"
+        size={70}
+        color="#000000ff"
+        style={styles.icon}
+      />
       <Text style={styles.title}>Create an Account</Text>
       <Text style={styles.label}>Email</Text>
       <TextInput
@@ -20,7 +62,7 @@ export default function Register() {
         onChangeText={setEmail}
         placeholder="Enter your Email"
         style={styles.input}
-        placeholderTextColor="#343333ff"
+        placeholderTextColor="#000000ff"
       />
       <Text style={styles.label}>Password</Text>
       <TextInput
@@ -28,7 +70,7 @@ export default function Register() {
         onChangeText={setPassword}
         placeholder="Enter your Password"
         style={styles.input}
-        placeholderTextColor="#343333ff"
+        placeholderTextColor="#000000ff"
       />
       <Text style={styles.label}>Confirm Password</Text>
       <TextInput
@@ -36,10 +78,14 @@ export default function Register() {
         onChangeText={setConfirmPassword}
         placeholder="Confirm your Password"
         style={styles.input}
-        placeholderTextColor="#343333ff"
+        placeholderTextColor="#000000ff"
       />
-      <TouchableOpacity style={styles.button}>
-        <Text style={styles.buttonText}>Sign up</Text>
+      <TouchableOpacity style={styles.button} onPress={handleRegister}>
+        <Text style={styles.buttonText}>
+          {loading ?
+            <ActivityIndicator color="#ffffffff" size={20} />
+          : "Sign Up"}
+        </Text>
       </TouchableOpacity>
     </View>
   );
@@ -92,5 +138,8 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     marginBottom: 10,
     color: "#000000ff",
+  },
+  icon: {
+    marginLeft: 130,
   },
 });
