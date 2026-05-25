@@ -3,7 +3,7 @@ import { StyleSheet, View, Text } from "react-native";
 export default function HomeScreen() {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Welcome to Secure Guard</Text>
+      <Text style={styles.title}>Welcome to Zed Secure</Text>
     </View>
   );
 }
@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 40,
-    fontWeight: "600",
+    fontWeight: "700",
     textAlign: "center",
     color: "#000000ff",
   },

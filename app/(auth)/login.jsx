@@ -27,7 +27,7 @@ export default function Login() {
     setLoading(true);
     try {
       // Send request to Express API
-      const response = await apiClient.post("/users/login", {
+      const response = await apiClient.post("/user/login", {
         email,
         password,
       });

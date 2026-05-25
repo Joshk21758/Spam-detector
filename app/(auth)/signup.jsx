@@ -5,11 +5,11 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
 import apiClient from "../../config/api";
 import { useRouter } from "expo-router";
-import { ActivityIndicator } from "react-native";
 
 export default function Register() {
   const router = useRouter();
@@ -28,7 +28,7 @@ export default function Register() {
     // Send request to Express API
     setLoading(true);
     try {
-      const response = await apiClient.post("/users/register", {
+      const response = await apiClient.post("/user/register", {
         email,
         password,
         confirmPassword,
@@ -42,7 +42,7 @@ export default function Register() {
         alert("Failed to send API request");
       }
     } catch (err) {
-      alert("Failed to Register user");
+      alert("Failed to Register user", err);
     } finally {
       setLoading(false);
     }
@@ -70,6 +70,7 @@ export default function Register() {
         onChangeText={setPassword}
         placeholder="Enter your Password"
         style={styles.input}
+        secureTextEntry={true}
         placeholderTextColor="#000000ff"
       />
       <Text style={styles.label}>Confirm Password</Text>
@@ -78,6 +79,7 @@ export default function Register() {
         onChangeText={setConfirmPassword}
         placeholder="Confirm your Password"
         style={styles.input}
+        secureTextEntry={true}
         placeholderTextColor="#000000ff"
       />
       <TouchableOpacity style={styles.button} onPress={handleRegister}>
