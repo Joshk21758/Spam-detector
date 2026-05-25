@@ -29,10 +29,11 @@ export default function Register() {
     setLoading(true);
     try {
       const response = await axios.post(
-        `${process.env.EXPO_PUBLIC_BASE_URL}/user/register`,
+        `${process.env.EXPO_PUBLIC_API_URL}/user/register`,
         {
           email,
           password,
+          confirmPassword,
         },
       );
 

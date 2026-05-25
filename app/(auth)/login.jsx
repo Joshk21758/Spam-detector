@@ -28,7 +28,7 @@ export default function Login() {
     try {
       // Send request to Express API
       const response = await axios.post(
-        `${process.env.EXPO_PUBLIC_BASE_URL}/user/login`,
+        `${process.env.EXPO_PUBLIC_API_URL}/user/login`,
         {
           email,
           password,

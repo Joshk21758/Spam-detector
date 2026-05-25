@@ -25,7 +25,7 @@ export default function Dashboard() {
     try {
       // send request to express API
       const response = await axios.post(
-        `${process.env.EXPO_PUBLIC_BASE_URL}/analyze/verify-security`,
+        `${process.env.EXPO_PUBLIC_API_URL}/analyze/verify-security`,
         {
           logsToAnalyze: text,
         },
