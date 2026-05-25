@@ -5,11 +5,11 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { ActivityIndicator } from "react-native";
-import apiClient from "../../config/api";
 import * as SecureStore from "expo-secure-store";
+import { axios } from "axios";
 
 export default function Login() {
   const router = useRouter();
@@ -27,10 +27,13 @@ export default function Login() {
     setLoading(true);
     try {
       // Send request to Express API
-      const response = await apiClient.post("/user/login", {
-        email,
-        password,
-      });
+      const response = await axios.post(
+        `${process.env.EXPO_PUBLIC_BASE_URL}/user/login`,
+        {
+          email,
+          password,
+        },
+      );
 
       // check if response is success
       if (response.status === 200 && response.data?.token) {

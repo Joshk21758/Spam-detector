@@ -7,9 +7,8 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
-
-import apiClient from "../config/api";
 import { useState } from "react";
+import { axios } from "axios";
 export default function Dashboard() {
   const [text, setText] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,9 +24,12 @@ export default function Dashboard() {
     setResult(null);
     try {
       // send request to express API
-      const response = await apiClient.post("/analyze/verify-security", {
-        logsToAnalyze: text,
-      });
+      const response = await axios.post(
+        `${process.env.EXPO_PUBLIC_BASE_URL}/analyze/verify-security`,
+        {
+          logsToAnalyze: text,
+        },
+      );
 
       // check if response is success
       if (response.status === 200 && response.data.success) {

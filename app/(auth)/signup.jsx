@@ -8,7 +8,7 @@ import {
   ActivityIndicator,
 } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import apiClient from "../../config/api";
+import { axios } from "axios";
 import { useRouter } from "expo-router";
 
 export default function Register() {
@@ -28,11 +28,13 @@ export default function Register() {
     // Send request to Express API
     setLoading(true);
     try {
-      const response = await apiClient.post("/user/register", {
-        email,
-        password,
-        confirmPassword,
-      });
+      const response = await axios.post(
+        `${process.env.EXPO_PUBLIC_BASE_URL}/user/register`,
+        {
+          email,
+          password,
+        },
+      );
 
       // Check if response is success
       if (response.status === 201) {
